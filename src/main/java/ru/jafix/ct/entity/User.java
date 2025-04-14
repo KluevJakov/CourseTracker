@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -17,4 +18,15 @@ public class User {
     private String login;
     @Column(name = "user_age")
     private int age;
+    @ManyToMany
+    private List<Role> role;
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", age=" + age +
+                '}';
+    }
 }

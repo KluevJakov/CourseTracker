@@ -1,8 +1,9 @@
 spring:
   jpa:
     properties:
-      show_sql: true
-      format_sql: true
+      hibernate:
+        show_sql: true
+        format_sql: true
     hibernate:
       ddl-auto: create
   datasource:
