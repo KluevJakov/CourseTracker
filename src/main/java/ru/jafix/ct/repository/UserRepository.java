@@ -7,11 +7,13 @@ import org.springframework.stereotype.Repository;
 import ru.jafix.ct.entity.User;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    User findByLogin(String login);
+    Optional<User> findByLogin(String login);
+
     List<User> findByAgeGreaterThan(int age);
 
     @Query(value = "SELECT u FROM User u WHERE u.age < :maxAge AND u.login like :liter")

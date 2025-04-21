@@ -6,6 +6,10 @@ import ru.jafix.ct.entity.User;
 import ru.jafix.ct.entity.dto.UserDto;
 import ru.jafix.ct.repository.UserRepository;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 @Service
 public class UserService {
 
@@ -38,10 +42,34 @@ public class UserService {
     }
 
     //получить пользователя по id
+    public User findUserById(UUID id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("Пользователя с таким id не существует");
+        }
+
+        return userOptional.get();
+    }
 
     //получить пользователя по login
+    public User findUserByLogin(String login) {
+        Optional<User> userOptional = userRepository.findByLogin(login);
+
+        if (userOptional.isEmpty()) {
+            throw new IllegalArgumentException("Пользователя с таким id не существует");
+        }
+
+        return userOptional.get();
+    }
 
     //получить список всех пользователей
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
 
     //удалить пользователя по id
+    public void deleteById(UUID id) {
+        userRepository.deleteById(id);
+    }
 }
