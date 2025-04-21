@@ -32,6 +32,10 @@ public class UserService {
 
     //изменить пользователя
     public User editUser(UserDto userDto) {
+        if (userDto.getId() == null) {
+            throw new IllegalArgumentException("id пользователя при изменении обязателен");
+        }
+
         User userForCreate = User.builder()
                 .id(userDto.getId())
                 .age(userDto.getAge())
@@ -70,6 +74,11 @@ public class UserService {
 
     //удалить пользователя по id
     public void deleteById(UUID id) {
-        userRepository.deleteById(id);
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        } else {
+            throw new IllegalArgumentException(String.format("Запись по id %s, не найдена", id));
+        }
+
     }
 }
