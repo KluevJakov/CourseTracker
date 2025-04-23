@@ -1,8 +1,12 @@
 package ru.jafix.ct.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,13 +17,31 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-public class User implements Responsable {
+public class User implements UserDetails, Responsable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String login;
-    @Column(name = "user_age")
+    private String password;
     private int age;
-    @ManyToMany
-    private List<Role> role;
+    @ManyToOne
+    private Role role;
+
+    @JsonIgnore
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(role);
+    }
+
+    @JsonIgnore
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @JsonIgnore
+    @Override
+    public String getUsername() {
+        return login;
+    }
 }

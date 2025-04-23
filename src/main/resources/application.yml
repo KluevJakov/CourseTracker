@@ -13,3 +13,8 @@ spring:
     driver-class-name: org.postgresql.Driver
   application:
     name: coursetracker
+
+logging:
+  level:
+    org.springframework.web: TRACE
+    org.springframework.security: TRACE
