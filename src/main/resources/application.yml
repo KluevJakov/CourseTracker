@@ -14,7 +14,11 @@ spring:
   application:
     name: coursetracker
 
+jwt:
+  secret: I6IkpvaG4gRG9lIiwI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0aiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0a
+  lifetime: 450000
+
 logging:
   level:
-    org.springframework.web: TRACE
-    org.springframework.security: TRACE
+    org.springframework.web: INFO
+    org.springframework.security: INFO

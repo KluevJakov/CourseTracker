@@ -1,4 +1,4 @@
-package ru.jafix.ct.service;
+package ru.jafix.ct.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
