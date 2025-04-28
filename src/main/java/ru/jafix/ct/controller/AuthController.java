@@ -1,5 +1,6 @@
 package ru.jafix.ct.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/auth")
-    public ResponseEntity<?> createUser(@RequestBody AuthRequest authRequest) {
+    public ResponseEntity<?> createUser(@RequestBody @Valid AuthRequest authRequest) {
         try {
             return ResponseEntity.ok(SuccessDto.builder().msg(authService.auth(authRequest)).build());
         } catch (Exception e) {

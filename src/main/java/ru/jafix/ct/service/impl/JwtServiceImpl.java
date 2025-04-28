@@ -34,27 +34,7 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public boolean validate(String jwt) {
-        try {
-            Jwts.parser()
-                    .verifyWith(getSecretKey())
-                    .build()
-                    .parseSignedClaims(jwt);
-
-            return true;
-        } catch (MalformedJwtException e) {
-            log.error("Jwt is malformed");
-        } catch (ExpiredJwtException e) {
-            log.error("Jwt is expired");
-        } catch (Exception e) {
-            log.error("Jwt is not valid");
-        }
-
-        return false;
-    }
-
-    @Override
-    public Claims parseClaims(String jwt) {
+    public Claims validateAndParseClaims(String jwt) {
         try {
             return Jwts.parser()
                     .verifyWith(getSecretKey())

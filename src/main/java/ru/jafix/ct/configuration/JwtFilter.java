@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 import ru.jafix.ct.entity.Role;
@@ -25,9 +26,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
         String jwt = parseJwt(request.getHeader(AUTH_HEADER));
 
         if (jwt == null) {
@@ -35,8 +36,9 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        if (jwtService.validate(jwt)) { //TODO: объединить валидацию + парсинг полезной нагрузки
-            Claims claims = jwtService.parseClaims(jwt);
+        Claims claims = jwtService.validateAndParseClaims(jwt);
+        if (claims != null) {
+
             JwtAuthentication authentication = JwtAuthentication.builder()
                     .login(claims.getSubject())
                     .authority(Role.builder()
