@@ -40,7 +40,7 @@ public class JwtFilter extends OncePerRequestFilter {
         if (claims != null) {
 
             JwtAuthentication authentication = JwtAuthentication.builder()
-                    .login(claims.getSubject())
+                    .email(claims.getSubject())
                     .authority(Role.builder()
                             .name(claims.get("role", String.class))
                             .build())

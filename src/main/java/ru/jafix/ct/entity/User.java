@@ -21,11 +21,13 @@ public class User implements UserDetails, Responsable {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String login;
+    private String email;
     private String password;
     private int age;
     @ManyToOne
     private Role role;
+    private UUID activateCode;
+    private Boolean enabled;
 
     @JsonIgnore
     @Override
@@ -42,6 +44,11 @@ public class User implements UserDetails, Responsable {
     @JsonIgnore
     @Override
     public String getUsername() {
-        return login;
+        return email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return enabled;
     }
 }

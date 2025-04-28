@@ -1,12 +1,11 @@
 package ru.jafix.ct.entity.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonIgnoreType;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import ru.jafix.ct.entity.Responsable;
 
 import java.util.UUID;
@@ -17,7 +16,10 @@ import java.util.UUID;
 @Builder
 public class UserDto implements Responsable {
     private UUID id;
-    private String login;
+    @NotBlank(message = "Email не должен быть пустым")
+    private String email;
+    @NotBlank(message = "Пароль не должен быть пустым")
+    @Length(min = 8, max = 20, message = "Длина пароля от 8 до 20 символов")
     private String password;
     private int age;
 }

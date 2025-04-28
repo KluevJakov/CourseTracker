@@ -1,5 +1,6 @@
 package ru.jafix.ct.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -7,12 +8,17 @@ import ru.jafix.ct.entity.Role;
 import ru.jafix.ct.entity.User;
 import ru.jafix.ct.entity.dto.UserDto;
 import ru.jafix.ct.repository.UserRepository;
+import ru.jafix.ct.service.MailService;
 import ru.jafix.ct.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -20,32 +26,45 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Autowired
+    private MailService mailService;
+
+    @Autowired
     private UserRepository userRepository;
 
     //создать пользователя
     @Override
     public UserDto createUser(UserDto userDto) {
-        if (userDto.getLogin() == null || userDto.getLogin().isEmpty()) {
-            throw new IllegalArgumentException("login is required field");
-        }
-
-        if (userDto.getPassword() == null || userDto.getPassword().isEmpty()) {
-            throw new IllegalArgumentException("password is required field");
-        }
-
         User userForCreate = User.builder()
                 .age(userDto.getAge())
-                .login(userDto.getLogin())
+                .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
+                .enabled(false)
+                .activateCode(UUID.randomUUID())
                 .role(Role.builder()
                         .id(UUID.fromString("8b60d3a0-e5d9-41b1-902d-ae529cfe8fac"))
                         .build())
                 .build();
 
         userForCreate = userRepository.save(userForCreate);
+
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        String email = userForCreate.getEmail();
+        UUID activateCode = userForCreate.getActivateCode();
+        executorService.execute(() -> {
+            try {
+                mailService.send(email, "Активация аккаунта",
+                        "Для активации аккаунта перейдите по ссылке: " +
+                                "http://localhost:8080/api/activate/" + activateCode);
+            } catch (Exception e) {
+                log.error("Не получилось отправить код активации на email: {}", email);
+            } finally {
+                executorService.shutdown();
+            }
+        });
+
         return UserDto.builder()
                 .id(userForCreate.getId())
-                .login(userForCreate.getLogin())
+                .email(userForCreate.getEmail())
                 .age(userForCreate.getAge())
                 .build();
     }
@@ -60,7 +79,7 @@ public class UserServiceImpl implements UserService {
         User userForCreate = User.builder()
                 .id(userDto.getId())
                 .age(userDto.getAge())
-                .login(userDto.getLogin())
+                .email(userDto.getEmail())
                 .build();
 
         return userRepository.save(userForCreate);
@@ -78,10 +97,10 @@ public class UserServiceImpl implements UserService {
         return userOptional.get();
     }
 
-    //получить пользователя по login
+    //получить пользователя по email
     @Override
-    public User findUserByLogin(String login) {
-        Optional<User> userOptional = userRepository.findByLogin(login);
+    public User findUserByEmail(String email) {
+        Optional<User> userOptional = userRepository.findByEmail(email);
 
         if (userOptional.isEmpty()) {
             throw new IllegalArgumentException("Пользователя с таким id не существует");

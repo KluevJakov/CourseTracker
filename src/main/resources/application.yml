@@ -11,6 +11,20 @@ spring:
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
+  mail:
+    host: smtp.mail.ru
+    port: 465
+    username:
+    password:
+    properties:
+      mail:
+        debug: true
+        smtp:
+          ssl:
+            enable: true
+          auth: true
+          starttls:
+            enable: true
   application:
     name: coursetracker
 

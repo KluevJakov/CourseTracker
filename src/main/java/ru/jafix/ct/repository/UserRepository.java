@@ -12,10 +12,11 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, UUID> {
-    Optional<User> findByLogin(String login);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByActivateCode(UUID activateCode);
 
     List<User> findByAgeGreaterThan(int age);
 
-    @Query(value = "SELECT u FROM User u WHERE u.age < :maxAge AND u.login like :liter")
-    List<User> findByLoginStartsWithLitterAndAgeBefore(@Param("maxAge") int maxAge, @Param("liter") String liter);
+    @Query(value = "SELECT u FROM User u WHERE u.age < :maxAge AND u.email like :liter")
+    List<User> findByEmailStartsWithLitterAndAgeBefore(@Param("maxAge") int maxAge, @Param("liter") String liter);
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class JwtAuthentication implements Authentication {
     private boolean authenticated;
-    private String login;
+    private String email;
     private Role authority;
 
     @Override
@@ -50,6 +50,6 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return login;
+        return email;
     }
 }

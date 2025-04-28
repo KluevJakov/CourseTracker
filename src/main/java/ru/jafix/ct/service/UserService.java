@@ -10,7 +10,7 @@ public interface UserService {
     UserDto createUser(UserDto userDto);
     User editUser(UserDto userDto);
     User findUserById(UUID id);
-    User findUserByLogin(String login);
+    User findUserByEmail(String email);
     List<User> findAllUsers();
     void deleteById(UUID id);
 }

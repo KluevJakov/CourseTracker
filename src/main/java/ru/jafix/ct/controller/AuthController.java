@@ -32,4 +32,16 @@ public class AuthController {
                     .build());
         }
     }
+
+    @GetMapping("/activate/{uuid}")
+    public ResponseEntity<?> activate(@PathVariable("uuid") UUID activateCode) {
+        try {
+            authService.activate(activateCode);
+            return ResponseEntity.ok(SuccessDto.builder().msg("Аккаунт активирован").build());
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(ErrorDto.builder()
+                    .errorMsg(e.getMessage())
+                    .build());
+        }
+    }
 }
