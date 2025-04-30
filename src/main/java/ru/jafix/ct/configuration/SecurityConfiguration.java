@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -38,6 +37,8 @@ public class SecurityConfiguration {
             .cors(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(e -> e
+                .requestMatchers(HttpMethod.GET, "/api/download/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/file/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/test/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/api/activate/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
