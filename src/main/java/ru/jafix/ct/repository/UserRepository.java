@@ -17,6 +17,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
 
     List<User> findByAgeGreaterThan(int age);
 
+    @Query(value = "SELECT u FROM User u WHERE u.role.name = 'user'")
+    List<User> findByRoleUser();
+
     @Query(value = "SELECT u FROM User u WHERE u.age < :maxAge AND u.email like :liter")
     List<User> findByEmailStartsWithLitterAndAgeBefore(@Param("maxAge") int maxAge, @Param("liter") String liter);
 }
