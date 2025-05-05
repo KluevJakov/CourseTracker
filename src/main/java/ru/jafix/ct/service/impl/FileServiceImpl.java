@@ -1,7 +1,6 @@
 package ru.jafix.ct.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.flywaydb.core.Flyway;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.jafix.ct.service.FileService;
