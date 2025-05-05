@@ -1,0 +1,3 @@
+INSERT INTO roles VALUES('0d86f5dc-9ac9-49f6-86f5-dc9ac959f63d', 'STUDENT');
+INSERT INTO roles VALUES('06cfe03f-6dc6-4936-8fe0-3f6dc6893639', 'TEACHER');
+INSERT INTO roles VALUES('b82ebe5c-e0ed-4f76-aebe-5ce0ed8f76f1', 'ADMIN');

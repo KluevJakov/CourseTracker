@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import ru.jafix.ct.configuration.Constants;
 import ru.jafix.ct.entity.Role;
 import ru.jafix.ct.entity.User;
 import ru.jafix.ct.entity.dto.UserDto;
+import ru.jafix.ct.repository.RoleRepository;
 import ru.jafix.ct.repository.UserRepository;
 import ru.jafix.ct.service.MailService;
 import ru.jafix.ct.service.UserService;
@@ -16,7 +18,6 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 @Slf4j
 @Service
@@ -31,18 +32,25 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private RoleRepository roleRepository;
+
     //создать пользователя
     @Override
     public UserDto createUser(UserDto userDto) {
+        Optional<Role> optRole = roleRepository.findByName(Constants.Roles.STUDENT);
+
+        if (optRole.isEmpty()) {
+            throw new IllegalArgumentException("CT-1: обратитесь к администратору");
+        }
+
         User userForCreate = User.builder()
                 .age(userDto.getAge())
                 .email(userDto.getEmail())
                 .password(passwordEncoder.encode(userDto.getPassword()))
-                .enabled(false)
+                .enabled(true) //TODO: поменять на false в продуктивной среде
                 .activateCode(UUID.randomUUID())
-                .role(Role.builder()
-                        .id(UUID.fromString("8b60d3a0-e5d9-41b1-902d-ae529cfe8fac"))
-                        .build())
+                .role(optRole.get())
                 .build();
 
         userForCreate = userRepository.save(userForCreate);

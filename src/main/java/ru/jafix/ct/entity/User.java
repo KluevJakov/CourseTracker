@@ -26,6 +26,7 @@ public class User implements UserDetails, Responsable {
     private int age;
     @ManyToOne
     private Role role;
+    @Column(name = "activate_code")
     private UUID activateCode;
     private Boolean enabled;
 
