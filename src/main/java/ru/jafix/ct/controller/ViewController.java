@@ -32,7 +32,7 @@ public class ViewController {
         try {
             userService.createUser(user);
         } catch (Exception e) {
-            attributes.addAttribute("error", e.getMessage());
+            attributes.addFlashAttribute("error", e.getMessage());
         }
 
         return "redirect:/view";
