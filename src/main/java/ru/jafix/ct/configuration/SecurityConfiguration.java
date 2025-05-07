@@ -9,6 +9,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -34,23 +35,27 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(AbstractHttpConfigurer::disable)
-            .csrf(AbstractHttpConfigurer::disable)
-            .authorizeHttpRequests(e -> e
-                .requestMatchers(HttpMethod.GET, "/api/download/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/file/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/test/**").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/activate/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
-                .requestMatchers(HttpMethod.DELETE, "/api/users").hasAuthority("admin")
-                .requestMatchers(HttpMethod.PUT, "/api/users").hasAnyAuthority("admin", "teacher")
-                .requestMatchers(HttpMethod.GET, "/api/users").authenticated()
-                .anyRequest().denyAll()
-            )
-            .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
-            .formLogin(AbstractHttpConfigurer::disable)
-            .authenticationProvider(authenticationProvider());
+                .cors(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(e -> e
+                        .requestMatchers("/reg/**").permitAll()
+                        .requestMatchers("/view2/**").permitAll()
+                        .requestMatchers("/view/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/download/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/file/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/test/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/activate/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/auth").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/users").permitAll()
+                        .requestMatchers(HttpMethod.DELETE, "/api/users").hasAuthority("admin")
+                        .requestMatchers(HttpMethod.PUT, "/api/users").hasAnyAuthority("admin", "teacher")
+                        .requestMatchers(HttpMethod.GET, "/api/users").authenticated()
+                        .anyRequest().denyAll()
+                )
+                .sessionManagement(e -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .authenticationProvider(authenticationProvider());
 
         return http.build();
     }

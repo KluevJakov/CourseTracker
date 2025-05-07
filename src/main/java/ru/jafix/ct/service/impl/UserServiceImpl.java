@@ -38,6 +38,12 @@ public class UserServiceImpl implements UserService {
     //создать пользователя
     @Override
     public UserDto createUser(UserDto userDto) {
+        Optional<User> optUser = userRepository.findByEmail(userDto.getEmail());
+
+        if (optUser.isPresent()) {
+            throw new IllegalArgumentException("Пользователь с таким email уже существует");
+        }
+
         Optional<Role> optRole = roleRepository.findByName(Constants.Roles.STUDENT);
 
         if (optRole.isEmpty()) {

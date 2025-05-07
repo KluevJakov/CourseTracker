@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Тестовая страница</title>
+</head>
+
+<body>
+<div style="margin-top: 50px; ">
+    <form style="width: 300px; display: flex; flex-direction: column;"
+          th:action="@{/reg}"
+          th:object="${auth}"
+          method="post">
+        <label>
+            Email:
+            <input type="email" th:field="*{email}"/>
+        </label>
+        <label>
+            Пароль:
+            <input type="password" th:field="*{password}"/>
+        </label>
+        <label>
+            Возраст:
+            <input type="number" th:field="*{age}"/>
+        </label>
+        <p th:text="${param.error}"></p>
+        <button type="submit">Зарегистрироваться</button>
+    </form>
+</div>
+
+</body>
+</html>

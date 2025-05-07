@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.Length;
 import ru.jafix.ct.entity.Responsable;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
+@ToString
 @Builder
 public class UserDto implements Responsable {
     private UUID id;

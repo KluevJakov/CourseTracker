@@ -35,6 +35,12 @@ dependencies {
 	//runtimeOnly 'org.flywaydb:flyway-database-postgresql:11.0.1'
 	implementation 'org.liquibase:liquibase-core:4.31.1'
 
+	/* Шаблонизтор */
+	implementation 'org.thymeleaf:thymeleaf'
+	implementation 'org.thymeleaf:thymeleaf-spring6'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
+
 	implementation 'org.apache.commons:commons-lang3:3.17.0'
 	implementation 'org.apache.poi:poi:5.4.1'
 	implementation 'org.apache.poi:poi-ooxml:5.4.1'
