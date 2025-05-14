@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: course-microservice
+  jpa:
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ctcourses
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/db.changelog-master.yml
+
+jwt:
+  secret: I6IkpvaG4gRG9lIiwI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0aiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0a
+
+server:
+  port: 8082

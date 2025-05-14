@@ -1,0 +1,43 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: kliuevia
+      changes:
+        - createTable:
+            tableName: courses
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  name: time
+                  type: INTEGER
+
+        - createTable:
+            tableName: members
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: UUID
+              - column:
+                  name: course_id
+                  type: UUID
+
+        - addForeignKeyConstraint:
+            baseTableName: members
+            baseColumnNames: course_id
+            constraintName: fk_members_courses
+            referencedTableName: courses
+            referencedColumnNames: id
