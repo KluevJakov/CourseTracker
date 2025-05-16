@@ -9,6 +9,7 @@ import ru.jafix.ct.entity.dto.ErrorDto;
 import ru.jafix.ct.entity.dto.SuccessDto;
 import ru.jafix.ct.entity.dto.UserDto;
 import ru.jafix.ct.service.UserService;
+import ru.jafix.ct.service.kafka.DataProducer;
 
 import java.util.UUID;
 
@@ -21,57 +22,33 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Responsable> createUser(@RequestBody @Valid UserDto userDto) {
-        try {
-            return ResponseEntity.ok(userService.createUser(userDto));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        return ResponseEntity.ok(userService.createUser(userDto));
     }
 
     @PutMapping
     public ResponseEntity<Responsable> editUser(@RequestBody UserDto userDto) {
-        try {
-            return ResponseEntity.ok(userService.editUser(userDto));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        return ResponseEntity.ok(userService.editUser(userDto));
     }
 
     @GetMapping
     public ResponseEntity<?> findByIdOrEmail(@RequestParam(value = "userId", required = false) UUID userId,
-                                      @RequestParam(value = "email", required = false) String email) {
-        try {
-            if (userId != null && email != null) {
-                throw new IllegalArgumentException("Ambigous parameters");
-            } else if (userId == null && email == null) {
-                return ResponseEntity.ok(userService.findAllUsers());
-            } else if (userId != null) {
-                return ResponseEntity.ok(userService.findUserById(userId));
-            } else {
-                return ResponseEntity.ok(userService.findUserByEmail(email));
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
+                                             @RequestParam(value = "email", required = false) String email) {
+        if (userId != null && email != null) {
+            throw new IllegalArgumentException("Ambigous parameters");
+        } else if (userId == null && email == null) {
+            return ResponseEntity.ok(userService.findAllUsers());
+        } else if (userId != null) {
+            return ResponseEntity.ok(userService.findUserById(userId));
+        } else {
+            return ResponseEntity.ok(userService.findUserByEmail(email));
         }
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Responsable> deleteById(@PathVariable("id") UUID id) {
-        try {
-            userService.deleteById(id);
-            return ResponseEntity.ok(SuccessDto.builder()
-                    .msg(String.format("Запись с id = %s, успешно удалена", id))
-                    .build());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        userService.deleteById(id);
+        return ResponseEntity.ok(SuccessDto.builder()
+                .msg(String.format("Запись с id = %s, успешно удалена", id))
+                .build());
     }
 }

@@ -24,24 +24,12 @@ public class AuthController {
 
     @PostMapping("/auth")
     public ResponseEntity<?> createUser(@RequestBody @Valid AuthRequest authRequest) {
-        try {
-            return ResponseEntity.ok(SuccessDto.builder().msg(authService.auth(authRequest)).build());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        return ResponseEntity.ok(SuccessDto.builder().msg(authService.auth(authRequest)).build());
     }
 
     @GetMapping("/activate/{uuid}")
     public ResponseEntity<?> activate(@PathVariable("uuid") UUID activateCode) {
-        try {
-            authService.activate(activateCode);
-            return ResponseEntity.ok(SuccessDto.builder().msg("Аккаунт активирован").build());
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        authService.activate(activateCode);
+        return ResponseEntity.ok(SuccessDto.builder().msg("Аккаунт активирован").build());
     }
 }

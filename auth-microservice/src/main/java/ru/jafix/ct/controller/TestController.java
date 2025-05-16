@@ -9,6 +9,8 @@ import ru.jafix.ct.entity.dto.ErrorDto;
 import ru.jafix.ct.service.DocService;
 import ru.jafix.ct.service.FileService;
 
+import java.io.IOException;
+
 @RequestMapping("/api")
 @RestController
 public class TestController {
@@ -19,37 +21,19 @@ public class TestController {
 
     @PostMapping("/test")
     public ResponseEntity<?> test() {
-        try {
-            docService.test();
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+        docService.test();
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/file")
-    public ResponseEntity<?> uploadFile(@RequestBody MultipartFile file) {
-        try {
-            fileService.save(file);
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+    public ResponseEntity<?> uploadFile(@RequestBody MultipartFile file) throws IOException {
+        fileService.save(file);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(value = "/download",
             produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<?> downloadFile(@RequestParam("filename") String filename) {
-        try {
-            return ResponseEntity.ok(fileService.receive(filename));
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(ErrorDto.builder()
-                    .errorMsg(e.getMessage())
-                    .build());
-        }
+    public ResponseEntity<?> downloadFile(@RequestParam("filename") String filename) throws IOException {
+        return ResponseEntity.ok(fileService.receive(filename));
     }
 }

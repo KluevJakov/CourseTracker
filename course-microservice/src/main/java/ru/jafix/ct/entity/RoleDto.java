@@ -1,10 +1,13 @@
 package ru.jafix.ct.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.UUID;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Getter
 @Setter
 @ToString

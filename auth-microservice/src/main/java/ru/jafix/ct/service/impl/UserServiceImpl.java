@@ -12,6 +12,7 @@ import ru.jafix.ct.repository.RoleRepository;
 import ru.jafix.ct.repository.UserRepository;
 import ru.jafix.ct.service.MailService;
 import ru.jafix.ct.service.UserService;
+import ru.jafix.ct.service.kafka.DataProducer;
 
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +35,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private DataProducer dataProducer;
 
     //создать пользователя
     @Override
@@ -58,6 +62,9 @@ public class UserServiceImpl implements UserService {
                 .activateCode(UUID.randomUUID())
                 .role(optRole.get())
                 .build();
+
+        //TODO: тест кафки - удалить
+        dataProducer.publishMessage(userForCreate);
 
         userForCreate = userRepository.save(userForCreate);
 

@@ -27,4 +27,12 @@ public class ControllerAdvisor {
                         .errorMsg("Тело запроса не должно быть пустым")
                         .build());
     }
+
+    @ExceptionHandler(exception = Exception.class)
+    public ResponseEntity<?> commonHandle(Exception e) {
+        return ResponseEntity.badRequest()
+                .body(ErrorDto.builder()
+                        .errorMsg(e.getMessage())
+                        .build());
+    }
 }
