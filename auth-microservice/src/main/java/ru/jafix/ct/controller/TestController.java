@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.jafix.ct.entity.dto.ErrorDto;
 import ru.jafix.ct.service.DocService;
 import ru.jafix.ct.service.FileService;
 

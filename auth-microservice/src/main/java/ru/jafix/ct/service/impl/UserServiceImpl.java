@@ -68,20 +68,21 @@ public class UserServiceImpl implements UserService {
 
         userForCreate = userRepository.save(userForCreate);
 
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        String email = userForCreate.getEmail();
-        UUID activateCode = userForCreate.getActivateCode();
-        executorService.execute(() -> {
-            try {
-                mailService.send(email, "Активация аккаунта",
-                        "Для активации аккаунта перейдите по ссылке: " +
-                                "http://localhost:8080/api/activate/" + activateCode);
-            } catch (Exception e) {
-                log.error("Не получилось отправить код активации на email: {}", email);
-            } finally {
-                executorService.shutdown();
-            }
-        });
+        try (ExecutorService executorService = Executors.newSingleThreadExecutor()) {
+            String email = userForCreate.getEmail();
+            UUID activateCode = userForCreate.getActivateCode();
+            executorService.execute(() -> {
+                try {
+                    mailService.send(email, "Активация аккаунта",
+                            "Для активации аккаунта перейдите по ссылке: " +
+                                    "http://localhost:8080/api/activate/" + activateCode);
+                } catch (Exception e) {
+                    log.error("Не получилось отправить код активации на email: {}", email);
+                } finally {
+                    executorService.shutdown();
+                }
+            });
+        }
 
         return UserDto.builder()
                 .id(userForCreate.getId())

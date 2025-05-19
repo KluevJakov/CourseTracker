@@ -9,6 +9,7 @@ import org.hibernate.validator.constraints.Length;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@SuppressWarnings({"unused"})
 public class AuthRequest {
     @NotBlank(message = "Email не должен быть пустым")
     private String email;

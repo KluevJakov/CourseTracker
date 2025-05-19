@@ -42,6 +42,10 @@ public class AuthServiceImpl implements AuthService {
 
         Optional<? extends GrantedAuthority> role = userDetails.getAuthorities().stream().findFirst();
 
+        if (role.isEmpty()) {
+            throw new IllegalArgumentException("---");
+        }
+
         return jwtService.generate(userDetails.getUsername(), role.get().getAuthority());
     }
 

@@ -13,6 +13,11 @@ public class FileServiceImpl implements FileService {
     @Override
     public void save(MultipartFile multipartFile) throws IOException {
         String originalName = multipartFile.getOriginalFilename();
+
+        if (originalName == null) {
+            throw new IllegalArgumentException("Файл не имеет названия");
+        }
+
         int pointPos = originalName.lastIndexOf('.');
         String ext = originalName.substring(pointPos+1);
 

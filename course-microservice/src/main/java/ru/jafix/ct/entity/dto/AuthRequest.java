@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
+@SuppressWarnings("unused")
 @Getter
 @Setter
 @NoArgsConstructor

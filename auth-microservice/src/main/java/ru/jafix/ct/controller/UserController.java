@@ -5,11 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.jafix.ct.entity.Responsable;
-import ru.jafix.ct.entity.dto.ErrorDto;
 import ru.jafix.ct.entity.dto.SuccessDto;
 import ru.jafix.ct.entity.dto.UserDto;
 import ru.jafix.ct.service.UserService;
-import ru.jafix.ct.service.kafka.DataProducer;
 
 import java.util.UUID;
 

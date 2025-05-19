@@ -10,7 +10,6 @@ import ru.jafix.ct.service.MemberService;
 import ru.jafix.ct.service.feign.UserClient;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
