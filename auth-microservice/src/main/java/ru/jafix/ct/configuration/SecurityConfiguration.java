@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(e -> e
+                        .requestMatchers("/actuator/**").permitAll()
                         .requestMatchers("/reg/**").permitAll()
                         .requestMatchers("/view2/**").permitAll()
                         .requestMatchers("/view/**").permitAll()

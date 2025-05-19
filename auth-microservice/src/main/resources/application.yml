@@ -47,5 +47,13 @@ logging:
 topics:
   user: USER_DATA
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: [health,actuator,threaddump]
+  security:
+    enabled: false
+
 server:
   port: 8081
