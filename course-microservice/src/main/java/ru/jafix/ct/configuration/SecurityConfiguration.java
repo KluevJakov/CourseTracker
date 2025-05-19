@@ -26,7 +26,7 @@ public class SecurityConfiguration {
                 .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(e -> e
-                        .requestMatchers("/api/courses").authenticated()
+                        .requestMatchers("/api/courses/**", "/api/members/**").authenticated()
                         .anyRequest().denyAll()
                 )
                 .sessionManagement(e -> e.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

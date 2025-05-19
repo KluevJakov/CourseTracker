@@ -28,5 +28,8 @@ topics:
   user: USER_DATA
   groupId: USERS_GROUP
 
+auth-service:
+  url: http://localhost:8081
+
 server:
   port: 8082

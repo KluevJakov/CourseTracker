@@ -1,6 +1,5 @@
-package ru.jafix.ct.entity;
+package ru.jafix.ct.entity.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
-import ru.jafix.ct.entity.RoleDto;
+import ru.jafix.ct.entity.dto.RoleDto;
 import ru.jafix.ct.entity.dto.JwtAuthentication;
 import ru.jafix.ct.service.JwtService;
 
@@ -44,6 +44,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     .authority(RoleDto.builder()
                             .name(claims.get("role", String.class))
                             .build())
+                    .token(jwt)
                     .authenticated(true)
                     .build();
             SecurityContextHolder.getContext().setAuthentication(authentication);

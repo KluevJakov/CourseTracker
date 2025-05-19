@@ -13,7 +13,7 @@ public class RouterConfiguration {
         return routeLocatorBuilder.routes()
                 .route(e -> e.path("/api/auth/**", "/api/activate/**", "/api/users/**")
                         .uri("http://localhost:8081"))
-                .route(e -> e.path("/api/courses/**")
+                .route(e -> e.path("/api/courses/**", "/api/members/**")
                         .uri("http://localhost:8082"))
                 .build();
     }
