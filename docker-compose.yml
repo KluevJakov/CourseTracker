@@ -10,6 +10,7 @@ services:
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     depends_on:
       - db
+      - redis
 
   course:
     build:
@@ -62,3 +63,10 @@ services:
       KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE: "true"
     depends_on:
       - zookeeper
+
+  redis:
+    image: redis:8.0.1
+    container_name: redis_ct
+    restart: unless-stopped
+    ports:
+      - "6379:6379"

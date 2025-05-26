@@ -1,4 +1,4 @@
-package ru.jafix.ct.configuration;
+package ru.jafix.ct.controller.advisor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

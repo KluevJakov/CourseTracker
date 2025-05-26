@@ -1,5 +1,6 @@
 package ru.jafix.ct.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,17 +17,14 @@ import ru.jafix.ct.service.JwtService;
 import java.util.Optional;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private UserDetailsService userDetailsService;
-    @Autowired
-    private JwtService jwtService;
-    @Autowired
-    private UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final UserDetailsService userDetailsService;
+    private final JwtService jwtService;
+    private final UserRepository userRepository;
 
     @Override
     public String auth(AuthRequest request) {
