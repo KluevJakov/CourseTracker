@@ -16,6 +16,10 @@ allprojects {
 			languageVersion = JavaLanguageVersion.of(21)
 		}
 	}
+
+	jar {
+		enabled = false
+	}
 }
 
 tasks.named('bootJar') {

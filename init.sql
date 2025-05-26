@@ -1,0 +1,2 @@
+CREATE DATABASE ct;
+CREATE DATABASE ctcourses;
