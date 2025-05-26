@@ -35,9 +35,10 @@ spring:
       bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
       key-serializer: org.apache.kafka.common.serialization.UUIDSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-  redis:
-    host: localhost
-    port: 6379
+  data:
+    redis:
+      host: ${SPRING_DATA_REDIS_HOST:localhost}
+      port: 6379
 
 jwt:
   secret: I6IkpvaG4gRG9lIiwI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0aiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMn0a
