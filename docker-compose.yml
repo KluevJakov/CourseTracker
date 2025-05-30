@@ -69,3 +69,5 @@ services:
     image: redis:8.0.1
     container_name: redis_ct
     restart: unless-stopped
+    ports:
+      - "6379:6379"

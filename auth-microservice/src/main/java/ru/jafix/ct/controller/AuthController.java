@@ -30,11 +30,15 @@ public class AuthController {
         String ip = httpRequest.getRemoteAddr();
 
         if (blockService.isBlocked(ip)) {
-            return ResponseEntity.status(429).body(ErrorDto.builder().errorMsg("Превышен лимит запросов. Попробуйте позже.").build());
+            return ResponseEntity.status(429).body(ErrorDto.builder()
+                    .errorMsg("Превышен лимит запросов. Попробуйте позже.")
+                    .build());
         }
 
         try {
-            SuccessDto response = SuccessDto.builder().msg(authService.auth(authRequest)).build();
+            SuccessDto response = SuccessDto.builder()
+                    .msg(authService.auth(authRequest))
+                    .build();
             blockService.authSuccess(ip);
             return ResponseEntity.ok(response);
         } catch (Exception e) {
